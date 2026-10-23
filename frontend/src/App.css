@@ -1,0 +1,138 @@
+:root {
+  --bg: #f6f3fb;
+  --card: #ffffff;
+  --text: #1f1a2e;
+  --muted: #6b6480;
+  --accent: #6b3fa0;
+  --accent-soft: #ece4f7;
+  --danger: #b3261e;
+  --danger-soft: #fde8e7;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15121c;
+    --card: #221d2d;
+    --text: #eee9f7;
+    --muted: #a59dba;
+    --accent: #b48cf0;
+    --accent-soft: #33284a;
+    --danger: #ff8a80;
+    --danger-soft: #3d1f1d;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin: 4px 0 20px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+}
+
+label,
+legend {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  font: inherit;
+  padding: 12px;
+  border: 1px solid var(--muted);
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+}
+
+.styles {
+  border: 0;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.styles legend {
+  width: 100%;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px 16px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+}
+
+.style.selected {
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+.primary {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  background: var(--accent);
+  color: var(--card);
+  font-weight: 600;
+}
+
+.primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.result p {
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.error {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.error p {
+  margin: 0 0 12px;
+}
+
+.error button {
+  border-color: var(--danger);
+  color: var(--danger);
+}
