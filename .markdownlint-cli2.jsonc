@@ -1,0 +1,15 @@
+{
+  // Правила markdownlint: https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+  "config": {
+    "default": true,
+    // довгі рядки в таблицях і реченнях українською — норма
+    "MD013": false,
+    // однакові заголовки дозволені в різних розділах (UC-01, UC-02 мають «Основний потік»)
+    "MD024": { "siblings_only": true },
+    // емодзі й <br/> у Mermaid-блоках та таблицях
+    "MD033": false,
+    // стиль таблиць не нормуємо: компактні `|---|`
+    "MD060": false
+  },
+  "ignores": ["**/node_modules/**", "**/.venv/**", "**/.pytest_cache/**", "frontend/dist/**"]
+}
