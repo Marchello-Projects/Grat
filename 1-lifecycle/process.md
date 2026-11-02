@@ -39,13 +39,13 @@ Kanban, бо в студентської команди час нерегуля�
 
 ### Ролі
 
-| Людина | Ролі | Артефакти |
+| Учасник | Ролі | Артефакти |
 |---|---|---|
-| А | Власник продукту, аналітик, фронтенд | беклог, [srs.md](srs.md), React-код |
-| Б | Архітектор, бекенд | [architecture.md](../2-architecture/architecture.md), [api.md](../2-architecture/api.md), ADR, код бекенду |
-| В | Тестувальник, DevOps, PM | [test-plan.md](../4-quality/test-plan.md), CI, [risks.md](../5-management/risks.md), [plan.md](../5-management/plan.md) |
+| **Аліна Горбаньова** | Капітан і автор ідеї проєкту: власник продукту, аналітик, PM | [vision.md](../0-product/vision.md), беклог, [srs.md](srs.md), [mvp.md](mvp.md), [plan.md](../5-management/plan.md), [risks.md](../5-management/risks.md), звʼязок із викладачем |
+| **Марк Паскалов** | Розробник: архітектор, бекенд, фронтенд, DevOps | [architecture.md](../2-architecture/architecture.md), [api.md](../2-architecture/api.md), ADR, код бекенду й фронтенду, модульні тести, CI, Docker |
+| **Макс Сахошко** | Тестувальник (QA) | [test-plan.md](../4-quality/test-plan.md), [test-cases.md](../4-quality/test-cases.md), ручне системне тестування, [test-report.md](../4-quality/test-report.md), [bug-reports.md](../4-quality/bug-reports.md), ревʼю документів |
 
-> Підставте імена учасників замість А, Б, В.
+У Марка 4 ролі — це ризик (R-05): кожна задача описана в беклозі, а код проходить ревʼю іншим учасником, щоб знання не були в одній голові.
 
 ### Події
 
@@ -62,14 +62,14 @@ Kanban, бо в студентської команди час нерегуля�
 
 ### RACI на ключові задачі
 
-| Задача | А | Б | В |
+| Задача | Аліна | Марк | Макс |
 |---|---|---|---|
 | Склад стилів у MVP | A/R | C | I |
 | Вимога до модерації контенту | A/R | C | C |
 | Вибір LLM за результатами spike | C | A/R | C |
-| Ендпоінт `POST /api/greetings` | C | A/R | C |
-| React-форма вибору стилю | A/R | C | C |
-| Розгортання на сервер | I | C | A/R |
+| Ендпоінт `POST /api/greetings` | I | A/R | C |
+| React-форма вибору стилю | C | A/R | C |
+| Розгортання на сервер | I | A/R | C |
 | Навантажувальний тест | I | C | A/R |
 
 У кожному рядку рівно одна A.

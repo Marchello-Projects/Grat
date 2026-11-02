@@ -35,7 +35,7 @@
 
 ## Стратегія випуску
 
-1. Гілка `main` у стані «готово», CI зелений, системні кейси пройдено на реальному Gemini.
+1. Гілка `main` у стані «готово», CI зелений; ручні системні кейси TC-28…TC-40 пройдено, протокол у [test-report.md](../4-quality/test-report.md) заповнено.
 2. Оновити `CHANGELOG.md`: перенести `[Unreleased]` у нову версію з датою.
 3. Тег: `git tag -a v1.0.0 -m "ДРбот v1.0.0" && git push origin v1.0.0`.
 4. GitHub → Releases → **Draft a new release** → тег `v1.0.0`, нотатки з CHANGELOG, скриншоти з `prototype/`.
