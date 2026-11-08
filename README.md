@@ -4,10 +4,18 @@
 - **Для кого:** студенти й молодь, які вітають друзів, одногрупників і колег у месенджерах.
 - **Рішення:** вебзастосунок — вводите імʼя, обираєте стиль гумору (брейнрот, душевно, офіційно) і за кілька секунд отримуєте готове привітання українською.
 - **Прототип:** робочий застосунок у цьому репозиторії; скриншоти — [2-architecture/prototype](2-architecture/prototype/README.md).
-- **Команда:** А — власник продукту, аналітик, фронтенд · Б — архітектор, бекенд · В — тестувальник, DevOps, PM (підставте імена).
+- **Команда:** Аліна Горбаньова — капітан і автор ідеї (власник продукту, аналітик, PM) · Марк Паскалов — розробник (архітектура, бекенд, фронтенд, DevOps) · Макс Сахошко — тестувальник.
 - **Стан:** v0.1.0 — MVP працює; відкритий дефект часу відповіді ([BUG-03](4-quality/bug-reports.md)).
+- **Як працювати в команді:** [CONTRIBUTING.md](CONTRIBUTING.md).
 - **Беклог:** [1-lifecycle/backlog.md](1-lifecycle/backlog.md) (перенести в GitHub Projects).
 - **Зміст репозиторію:** документація за темами курсу ТСПП (таблиця нижче) + код `backend/`, `frontend/`.
+
+## Модулі консольного інкремента
+
+Одна людина — один модуль і його тести. Спільний шар запуску — `backend/app/cli.py`. Контракт — у [практичній 4](practicals/04-repo-process.md).
+
+| Хто | Модуль | Що працює через два тижні |
+|---|---|---|
 
 ## Документація
 
@@ -55,7 +63,7 @@ cd backend && pytest -q && ruff check .      # 28 тестів
 cd frontend && npm test && npm run lint      # 5 тестів
 ```
 
-Системні тести в браузері (потрібні запущені сервери й Playwright) — [4-quality/system-tests](4-quality/system-tests/system_tests.py). GitHub Actions: [ci.yml](.github/workflows/ci.yml) — код, [docs.yml](.github/workflows/docs.yml) — Markdown і посилання.
+Системне тестування — вручну, за чек-листом у [test-cases.md](4-quality/test-cases.md) (TC-28…TC-40), результати — у протоколі [test-report.md](4-quality/test-report.md); проводить Макс Сахошко. GitHub Actions: [ci.yml](.github/workflows/ci.yml) — код, [docs.yml](.github/workflows/docs.yml) — Markdown і посилання.
 
 ## Налаштування LLM
 

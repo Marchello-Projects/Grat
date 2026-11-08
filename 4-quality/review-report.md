@@ -5,7 +5,7 @@
 | Дата | 19.10.2026 |
 | Обʼєкти | [srs.md](../1-lifecycle/srs.md), [api.md](../2-architecture/api.md), [architecture.md](../2-architecture/architecture.md), код `backend/`, `frontend/` |
 | Метод | ревʼю за чек-листом + автоматичний статичний аналіз (Ruff, ESLint, markdownlint) |
-| Ревʼюери | В (QA) — SRS і API; Б (архітектор) — архітектура; перехресно А |
+| Ревʼюери | Макс Сахошко (QA) — SRS і API; Марк Паскалов (архітектор) — архітектура; перехресно Аліна Горбаньова (PO) |
 
 ## Чек-лист
 
