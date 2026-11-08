@@ -85,7 +85,7 @@ def test_unexpected_error_in_link_falls_back_too():
 
 Приклад одного баг-репорту повністю:
 
-```
+```text
 Заголовок: Зайва кома в LLM_FALLBACKS валить сервер на старті (BUG-14)
 Кроки:     1. backend/.env: LLM_FALLBACKS=gemini:gemini-3.5-flash-lite,templates,
            2. python -m app.cli Саша
