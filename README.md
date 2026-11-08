@@ -26,7 +26,7 @@
 | [2-architecture](2-architecture/) — архітектура | [use-cases](2-architecture/use-cases.md) · [class-diagram](2-architecture/class-diagram.md) · [architecture](2-architecture/architecture.md) · [modules](2-architecture/modules.md) · [api](2-architecture/api.md) · [integration-plan](2-architecture/integration-plan.md) · [ADR](2-architecture/adr/) · [prototype](2-architecture/prototype/README.md) · [user-flow](2-architecture/user-flow.md) |
 | [3-implementation](3-implementation/) — дані | [data-model](3-implementation/data-model.md) · [validation-rules](3-implementation/validation-rules.md) · [git-workflow](3-implementation/git-workflow.md) |
 | [4-quality](4-quality/) — якість | [test-plan](4-quality/test-plan.md) · [test-cases](4-quality/test-cases.md) · [test-report](4-quality/test-report.md) · [bug-reports](4-quality/bug-reports.md) · [review-report](4-quality/review-report.md) · [acceptance.feature](4-quality/acceptance.feature) |
-| [5-management](5-management/) — управління | [plan](5-management/plan.md) · [risks](5-management/risks.md) · [release-plan](5-management/release-plan.md) · [user-guide](5-management/user-guide.md) · [support](5-management/support.md) · [roadmap](5-management/roadmap.md) · [privacy](5-management/privacy.md) |
+| [5-management](5-management/) — управління | [plan](5-management/plan.md) · [runbook](5-management/runbook.md) · [risks](5-management/risks.md) · [release-plan](5-management/release-plan.md) · [user-guide](5-management/user-guide.md) · [support](5-management/support.md) · [roadmap](5-management/roadmap.md) · [privacy](5-management/privacy.md) |
 | Корінь | [CHANGELOG](CHANGELOG.md) · [LICENSE](LICENSE) · [docs.yml](.github/workflows/docs.yml) · [ci.yml](.github/workflows/ci.yml) |
 
 ## Запуск
@@ -54,7 +54,7 @@ npm run dev                     # http://localhost:5173, /api проксіюєт
 
 Без ключа: `LLM_PROVIDER=mock` у `backend/.env` — заглушка без мережі.
 
-Розгортання на сервері: `cp backend/.env.example backend/.env`, заповнити ключ і `CORS_ORIGINS`, потім `docker compose up -d --build` — сайт на порту 8080. Деталі — у [release-plan](5-management/release-plan.md).
+Розгортання на сервері: `cp backend/.env.example backend/.env`, заповнити ключ і `CORS_ORIGINS`, потім `docker compose up -d --build` — сайт на порту 8080. Покроково — з підготовкою сервера, ключами, доступами й типовими збоями — у **[runbook](5-management/runbook.md)**; реліз і відкат — у [release-plan](5-management/release-plan.md).
 
 ## Тести
 
@@ -72,6 +72,7 @@ cd frontend && npm test && npm run lint      # 5 тестів
 | `LLM_PROVIDER` | `gemini` | `gemini` (безкоштовно) · `anthropic` (Claude, платно) · `mock` (заглушка) |
 | `GEMINI_API_KEY` / `ANTHROPIC_API_KEY` | — | ключ обраного провайдера |
 | `LLM_MODEL` | `gemini-3.8-flash` / `claude-opus-5-5` | швидша модель: `gemini-3.5-flash-lite` (див. [ADR-0002](2-architecture/adr/0002-llm-provider-gemini.md)) |
+| `LLM_FALLBACKS` | порожньо | резерв по черзі, напр. `gemini:gemini-3.5-flash-lite,templates`; `templates` — готові привітання без мережі ([ADR-0005](2-architecture/adr/0005-fallback-llm.md)) |
 | `LLM_TIMEOUT_S` | `15` | таймаут виклику LLM |
 | `LLM_MAX_RETRIES` | `1` | повтори при збоях мережі / 5xx |
 | `LLM_MAX_CONCURRENCY` | `20` | одночасних викликів LLM, далі 429 |
