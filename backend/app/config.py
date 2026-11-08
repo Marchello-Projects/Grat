@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     llm_provider: str = "gemini"
     # порожньо → модель за замовчуванням для обраного провайдера
     llm_model: str = ""
+    # резерв через кому, по черзі: «gemini:gemini-3.5-flash-lite,templates» (ADR-0005)
+    llm_fallbacks: str = ""
     gemini_api_key: str = ""
     anthropic_api_key: str = ""
     llm_timeout_s: float = 15.0

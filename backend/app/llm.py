@@ -161,16 +161,86 @@ class MockGenerator:
 
     async def generate(self, name: str, style: Style) -> str:
         await asyncio.sleep(random.uniform(*self._delay))
-        return f"[{style.value}] З днем народження, {name}! 🎉"
+        return f"[{style.value}] З днем народження, {name}! Бажаю щастя й натхнення."
+
+
+TEMPLATES: dict[Style, tuple[str, ...]] = {
+    Style.brainrot: (
+        "{name}, з днем народження! Твоя аура сьогодні +1000, а рівень сігми зашкалює. "
+        "Нехай кожен день буде як найкращий мем у стрічці 🚀",
+        "{name}, вітаю! Ти головний персонаж цього року, і сценаристи вже на твоєму боці. "
+        "Бажаю нескінченного вайбу і тільки легендарних квестів 🗿✨",
+    ),
+    Style.warm: (
+        "{name}, з днем народження! Нехай поруч завжди будуть люди, з якими тепло. "
+        "Бажаю здоровʼя, сміливих мрій і багато приводів усміхатися 💛",
+        "{name}, вітаю тебе! Хай цей рік буде щедрим на радість і добрі зустрічі. "
+        "Обіймаю і бажаю, щоб усе задумане збувалося 🎂",
+    ),
+    Style.official: (
+        "{name}, щиро вітаємо Вас із днем народження! "
+        "Бажаємо міцного здоровʼя, натхнення і нових професійних звершень.",
+        "{name}, прийміть найщиріші вітання з днем народження! "
+        "Нехай кожен робочий день приносить задоволення, а кава ніколи не закінчується.",
+    ),
+}
+
+
+class TemplateGenerator:
+    """Остання ланка резерву: перевірені шаблони без мережі (ADR-0005)."""
+
+    async def generate(self, name: str, style: Style) -> str:
+        return random.choice(TEMPLATES[style]).format(name=name)
+
+
+class FallbackGenerator:
+    """Пробує генератори по черзі, доки один не відповість (ADR-0005, BUG-10)."""
+
+    def __init__(self, chain: list[tuple[str, GreetingGenerator]]):
+        self._chain = chain
+
+    async def generate(self, name: str, style: Style) -> str:
+        error: Exception | None = None
+        for label, generator in self._chain:
+            try:
+                text = await generator.generate(name, style)
+            except (LLMBusy, LLMUnavailable) as e:
+                log.warning("fallback: %s не відповів (%s), пробуємо далі", label, e)
+                error = e
+                continue
+            except Exception:  # баг адаптера чи SDK не має лишати користувача без привітання
+                log.exception("fallback: %s упав з несподіваною помилкою, пробуємо далі", label)
+                error = LLMUnavailable("Сервіс генерації тимчасово недоступний")
+                continue
+            log.info("fallback: відповів %s", label)
+            return text
+        raise error or LLMUnavailable("Сервіс генерації тимчасово недоступний")
+
+
+def _single(settings: Settings, provider: str, model: str = "") -> GreetingGenerator:
+    update = {"llm_provider": provider, "llm_model": model, "llm_fallbacks": ""}
+    return make_generator(settings.model_copy(update=update))
 
 
 def make_generator(settings: Settings) -> GreetingGenerator:
+    if settings.llm_fallbacks:
+        # «gemini:gemini-3.5-flash-lite,templates» → основний генератор + резерв по черзі
+        main_label = f"{settings.llm_provider}:{settings.model}"
+        chain = [(main_label, _single(settings, settings.llm_provider, settings.llm_model))]
+        # зайва кома чи пробіли в .env — не причина валити сервер на старті (BUG-14)
+        for item in filter(None, (i.strip() for i in settings.llm_fallbacks.split(","))):
+            provider, _, model = item.partition(":")
+            chain.append((item, _single(settings, provider.strip(), model.strip())))
+        return FallbackGenerator(chain)
     match settings.llm_provider:
         case "mock":
             return MockGenerator(delay=(0.5, 1.5))
+        case "templates":
+            return TemplateGenerator()
         case "gemini":
             return GeminiGenerator(settings)
         case "anthropic":
             return ClaudeGenerator(settings)
         case other:
-            raise ValueError(f"Невідомий LLM_PROVIDER={other!r}: gemini | anthropic | mock")
+            known = "gemini | anthropic | mock | templates"
+            raise ValueError(f"Невідомий LLM_PROVIDER={other!r}: {known}")
