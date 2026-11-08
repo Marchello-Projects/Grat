@@ -31,7 +31,7 @@ def _mentions(text: str, name: str) -> bool:
 def _count_sentences(text: str) -> int:
     """Речення закінчується «.!?…»; хвіст із літерами без крапки (… щастя 🎉) — теж речення."""
     ends = list(SENTENCE_END.finditer(text))
-    tail = text[ends[-1].end():] if ends else text
+    tail = text[ends[-1].end() :] if ends else text
     return len(ends) + (1 if re.search(r"\w", tail) else 0)
 
 
